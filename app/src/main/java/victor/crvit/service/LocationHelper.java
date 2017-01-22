@@ -25,8 +25,8 @@ public class LocationHelper extends SQLiteOpenHelper {
                 + " (id integer primary key autoincrement, "
                 + DbShema.Cols.Latitude + " text, "
                 + DbShema.Cols.Longitude + " text, "
-                + DbShema.Cols.Date + " datetime, "
-                + DbShema.Cols.DateAdd + " datetime);");
+                + DbShema.Cols.Date + " long, "
+                + DbShema.Cols.DateAdd + " long);");
     }
 
     @Override

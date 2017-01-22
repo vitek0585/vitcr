@@ -17,8 +17,8 @@ public class CursorWraper extends CursorWrapper {
         location.uuiid = getString(getColumnIndex(DbShema.Cols.UUID));
         location.Latitude = getDouble(getColumnIndex(DbShema.Cols.Latitude));
         location.Longitude = getDouble(getColumnIndex(DbShema.Cols.Longitude));
-        location.time = new Date(getLong(getColumnIndex(DbShema.Cols.Date)));
-        location.createdDate = new Date(getLong(getColumnIndex(DbShema.Cols.DateAdd)));
+        location.time = getLong(getColumnIndex(DbShema.Cols.Date));
+        location.createdDate = getLong(getColumnIndex(DbShema.Cols.DateAdd));
         return location;
     }
 }

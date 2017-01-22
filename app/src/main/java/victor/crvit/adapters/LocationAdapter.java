@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import victor.crvit.MainActivity;
 import victor.crvit.R;
 import victor.crvit.repositories.Location;
@@ -51,10 +54,12 @@ public class LocationAdapter extends ArrayAdapter<Location> {
 
         // заполняем View в пункте списка данными из товаров: наименование, цена
         // и картинка
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ");
         ((TextView) view.findViewById(R.id.lad)).setText(Double.toString(p.Latitude));
-        ((TextView) view.findViewById(R.id.log)).setText(Double.toString(p.Latitude));
-        ((TextView) view.findViewById(R.id.time)).setText(p.time.toString());
-        ((TextView) view.findViewById(R.id.dateAdd)).setText(p.createdDate.toString());
+        ((TextView) view.findViewById(R.id.log)).setText(Double.toString(p.Longitude));
+        ((TextView) view.findViewById(R.id.time)).setText(simpleDateFormat.format(new Date(p.time)));
+        ((TextView) view.findViewById(R.id.dateAdd)).setText(simpleDateFormat.format(new Date(p.createdDate)));
 
         return view;
     }

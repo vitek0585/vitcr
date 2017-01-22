@@ -38,8 +38,8 @@ public class LocationRepo {
         ContentValues values = new ContentValues();
         values.put(DbShema.Cols.Latitude, location.Latitude);
         values.put(DbShema.Cols.Longitude, location.Longitude);
-        values.put(DbShema.Cols.Date, location.time.toString());
-        values.put(DbShema.Cols.DateAdd, location.createdDate.toString());
+        values.put(DbShema.Cols.Date, location.time);
+        values.put(DbShema.Cols.DateAdd, location.createdDate);
         mDatabase.insert(DbShema.LocationTable.NAME,null,values);
     }
 
@@ -51,7 +51,7 @@ public class LocationRepo {
                 null ,
                 null, // groupBy
                 null, // having
-                null // orderBy
+                DbShema.Cols.UUID +" DESC" // orderBy
         );
 
         return new CursorWraper(cursor);

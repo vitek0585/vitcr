@@ -27,7 +27,7 @@ public class DoSomething extends Service {
     private StringBuilder _stringBuilder;
     private GPSTracker gpsTracker;
     private LocationRepo locationRepo;
-
+private Notification notification;
     public DoSomething() {
         super();
     }
@@ -46,6 +46,8 @@ public class DoSomething extends Service {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                setStatusIcon(android.support.v7.appcompat.R.drawable.abc_popup_background_mtrl_mult);
+
                 //Toast.makeText(getApplicationContext(), _stringBuilder.toString(), Toast.LENGTH_SHORT).show();
                 _stringBuilder.delete(0, _stringBuilder.length());
                 gpsTracker.canGetLocation();
@@ -54,27 +56,39 @@ public class DoSomething extends Service {
                     victor.crvit.repositories.Location location1 = new victor.crvit.repositories.Location();
                     location1.Latitude = location.getLatitude();
                     location1.Longitude = location.getLongitude();
-                    location1.time = new Date(location.getTime());
-                    location1.createdDate = new Date();
+                    location1.time = location.getTime();
+
+                    location1.createdDate = System.currentTimeMillis();
                     locationRepo.add(location1);
-                    Toast.makeText(getApplicationContext(),"added", Toast.LENGTH_SHORT).show();
+
+                    //Toast.makeText(getApplicationContext(),"added", Toast.LENGTH_SHORT).show();
                 }
                 AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
                 alarm.set(alarm.RTC_WAKEUP,
                         System.currentTimeMillis() + (10 * 500),
                         PendingIntent.getService(context, 0, new Intent(context, DoSomething.class), 0)
                 );
+                setStatusIcon(android.support.v7.appcompat.R.drawable.notification_icon_background);
+
             }
         });
 
         return START_REDELIVER_INTENT;
+    }
+    void setStatusIcon(int iconId){
+        notification.icon = iconId;
+        NotificationManager notifier = (NotificationManager)
+                this.getSystemService(this.NOTIFICATION_SERVICE);
+        notifier.notify(1, notification);
+
     }
 
     @Override
     public void onCreate() {
         _stringBuilder = new StringBuilder();
         showIcon();
-        showSettings();
+        //showSettings();
+
         locationRepo = LocationRepo.Create(getApplicationContext());
         gpsTracker = new GPSTracker(getApplicationContext());
 //        {
@@ -108,7 +122,7 @@ public class DoSomething extends Service {
     }
 
     private void showIcon() {
-        Notification notification = new Notification.Builder(this)
+        notification = new Notification.Builder(this)
                 .setSmallIcon(android.support.v7.appcompat.R.drawable.notification_icon_background)
                 .setOngoing(false).build();
         notification.flags |= Notification.FLAG_NO_CLEAR

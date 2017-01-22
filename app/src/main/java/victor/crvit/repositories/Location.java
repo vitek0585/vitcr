@@ -8,7 +8,7 @@ import java.util.Date;
 public class Location {
     public double Latitude;
     public double Longitude;
-    public Date time;
-    public Date createdDate;
+    public long time;
+    public long createdDate;
     public String uuiid;
 }
